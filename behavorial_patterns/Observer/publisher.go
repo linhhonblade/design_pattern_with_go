@@ -21,7 +21,7 @@ func NewThread(title string, author string) thread {
 
 type Channel struct {
 	name          string
-	subscribeList []subscriber
+	SubscribeList []subscriber
 	latestThread  thread
 }
 
@@ -32,7 +32,7 @@ func NewChannel(name string) publisher {
 }
 
 func (c *Channel) Subcribe(s subscriber) {
-	c.subscribeList = append(c.subscribeList, s)
+	c.SubscribeList = append(c.SubscribeList, s)
 }
 
 func removeFromSlice(subscribeList []subscriber, s subscriber) []subscriber {
@@ -42,18 +42,18 @@ func removeFromSlice(subscribeList []subscriber, s subscriber) []subscriber {
 			// Move the one that we want to remove to the end of slice
 			// Then return the slice excluding the last item
 			subscribeList[length-1], subscribeList[i] = subscribeList[i], subscribeList[length-1]
-			return subscribeList[:length-2]
+			return subscribeList[:length-1]
 		}
 	}
 	return subscribeList
 }
 
 func (c *Channel) Unsubscribe(s subscriber) {
-	c.subscribeList = removeFromSlice(c.subscribeList, s)
+	c.SubscribeList = removeFromSlice(c.SubscribeList, s)
 }
 
 func (c *Channel) NotifyAll() {
-	for _, s := range c.subscribeList {
+	for _, s := range c.SubscribeList {
 		s.update(c.latestThread.title)
 	}
 }
@@ -61,4 +61,8 @@ func (c *Channel) NotifyAll() {
 func (c *Channel) PushThread(t thread) {
 	c.latestThread = t
 	c.NotifyAll()
+}
+
+func (c Channel) GetSubsribeList() []subscriber {
+	return c.SubscribeList
 }
