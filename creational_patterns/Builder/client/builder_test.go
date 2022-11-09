@@ -13,7 +13,8 @@ func TestBuilder(t *testing.T) {
 
 	// Build a car
 	director.SetBuilder(carBuilder)
-	car := director.Construct()
+	director.Construct()
+	car := carBuilder.GetVehicle()
 	if car.Wheels != 4 {
 		t.Errorf("Wheels on car is %d, expected 4\n", car.Wheels)
 	}
@@ -26,14 +27,15 @@ func TestBuilder(t *testing.T) {
 
 	// Build a bike
 	director.SetBuilder(bikeBuilder)
-	bike := director.Construct()
+	director.Construct()
+	bike := bikeBuilder.GetVehicle()
 	if bike.Wheels != 2 {
 		t.Errorf("Wheels on bike is %d, expected 2\n", bike.Wheels)
 	}
-	if car.Seats != 5 {
+	if bike.Seats != 2 {
 		t.Errorf("Seats on bike is %d, expected 2\n", bike.Seats)
 	}
-	if car.Structure != "Bike" {
-		t.Errorf("Bike structure is %s, expected \"Bake\"", bike.Structure)
+	if bike.Structure != "Bike" {
+		t.Errorf("Bike structure is %s, expected \"Bike\"", bike.Structure)
 	}
 }
