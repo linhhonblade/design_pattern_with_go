@@ -1,0 +1,5 @@
+go 1.19
+
+use ./behavorial_patterns/Observer/
+use ./creational_patterns/Builder/
+use ./creational_patterns/Singleton/
